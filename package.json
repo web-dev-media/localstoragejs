@@ -1,0 +1,42 @@
+{
+  "name": "localstorage-handler",
+  "version": "1.0.0",
+  "description": "A lightweight javascript handler for using localstorage.",
+  "main": "localsorage.js",
+  "scripts": {
+    "test": "minify src/localstorage.js > ./localstorage.js && jest"
+  },
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/web-dev-media/localstoragejs.git"
+  },
+  "author": {
+    "name": "Web Dev Media UG",
+    "email": "info@web-dev-media.de",
+    "url": "https://web-dev-media.de"
+  },
+  "contributors": [
+    {
+      "name": "René Reimann",
+      "email": "info@rene-reimann.de",
+      "url": "http://www.rene-reimann.de"
+    },
+    {
+      "name": "Sven Balzer",
+      "email": "s.balzer@web-dev-media.de",
+      "url": "https://web-dev-media.de"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/web-dev-media/localstoragejs/issues"
+  },
+  "homepage": "https://github.com/web-dev-media/localstoragejs#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-google": "^0.13.0",
+    "jest": "^24.8.0",
+    "minify": "^4.1.3"
+  }
+}
