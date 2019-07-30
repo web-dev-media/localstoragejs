@@ -6,6 +6,10 @@
   "scripts": {
     "test": "minify src/localstorage.js > ./localstorage.js && jest"
   },
+  "jest": {
+    "verbose": true,
+    "setupFiles": ["jest-localstorage-mock"]
+  },
   "keywords": [],
   "repository": {
     "type": "git",
@@ -37,6 +41,8 @@
     "eslint": "^5.16.0",
     "eslint-config-google": "^0.13.0",
     "jest": "^24.8.0",
+    "jest-localstorage-mock": "^2.4.0",
     "minify": "^4.1.3"
-  }
+  },
+  "dependencies": {}
 }
