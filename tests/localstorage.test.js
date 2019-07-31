@@ -24,11 +24,10 @@ test('should set cacheTime', () => {
 	expect(localsorageHandle.options.cacheTime).toBe(10);
 });
 
-
 test('update localStorage', () => {
  	localsorageHandle.update(KEY, DATA);
 
-	expect(localsorageHandle.options.transientKey).toBe(KEY + '_transient');
+	expect(localsorageHandle.options.cacheTimetKey).toBe(KEY + '_cacheTime');
 	expect(localsorageHandle.get(KEY)).toBe(DATA);
 });
 
@@ -41,15 +40,20 @@ test('shouldUpdateStorage() do not update', () => {
 	expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(false);
 });
 
-test('shouldUpdateStorage() transient timout after 10s', () => {
-	let then = new Date().getTime() + TIME;
-	let loop = [0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, 3, 4, 5, 6, 7,];
-
+test('shouldUpdateStorage() do update on timeout ', (done) => {
 	localsorageHandle.update(KEY, DATA);
 	expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(false);
-	// wait
-	for(let i = 0; i < loop.length; i++){	}
-	expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(true);
 
+	setTimeout(() => {
+		expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(true);
+		done();
+	}, 11);
+});
 
+test('purge storage by key', () => {
+	localsorageHandle.update(KEY, DATA);
+	expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(false);
+
+	localsorageHandle.purge(KEY);
+	expect(localsorageHandle.get(KEY)).toBe(null);
 });

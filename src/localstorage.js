@@ -1,35 +1,35 @@
 const localstorage = {
 	options: {
-		cacheTime: 24 * 60 * 60,
-		transientKey: '',
-		cacheKey: ''
+		cacheTime    : 24 * 60 * 60,
+		cacheTimetKey: '',
+		cacheKey     : ''
 	},
 
-	transient: function(){
+	cacheTime: function(){
 		let self = this;
 
 		let functions =  {
 			updateKey: function () {
-				if(!self.options.transientKey) {
-					self.options.transientKey = self.options.cacheKey + '_transient';
+				if(!self.options.cacheTimetKey) {
+					self.options.cacheTimetKey = self.options.cacheKey + '_cacheTime';
 				}
 			},
 
-			getKey: function () {
-				return self.options.transientKey;
+			key: function () {
+				return self.options.cacheTimetKey;
 			},
 
 			get: function () {
-				let t = localStorage.getItem(self.options.transientKey);
+				let t = localStorage.getItem(self.options.cacheTimetKey);
 				return t ? t : this.set();
 			},
 
 			set: function () {
-				return localStorage.setItem(self.options.transientKey, (new Date().getTime() + self.options.cacheTime));
+				return localStorage.setItem(self.options.cacheTimetKey, (new Date().getTime() + self.options.cacheTime));
 			},
 
 			purge: function () {
-				localStorage.removeItem(self.options.transientKey);
+				localStorage.removeItem(self.options.cacheTimetKey);
 			}
 		};
 
@@ -43,11 +43,11 @@ const localstorage = {
 			return true;
 		}
 
-		return this.transient().get() ? this.transient().get() < new Date().getTime() : true;
+		return this.cacheTime().get() ? this.cacheTime().get() < new Date().getTime() : true;
 	},
 
 	update: function(localStorageKey, data){
-		localStorage.setItem( this.transient().getKey(), (new Date().getTime() + this.options.cacheTime ));
+		localStorage.setItem( this.cacheTime().key(), (new Date().getTime() + this.options.cacheTime ));
 		localStorage.setItem( localStorageKey, JSON.stringify(data));
 	},
 
@@ -60,8 +60,9 @@ const localstorage = {
 
 	purge: function(localStorageKey) {
 		localStorage.removeItem(localStorageKey);
-		this.transient().purge();
+		this.cacheTime().purge();
 	}
+
 };
 
 module.exports = localstorage;
