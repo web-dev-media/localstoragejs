@@ -4,7 +4,7 @@
   "description": "A lightweight javascript handler for using localstorage.",
   "main": "localsorage.js",
   "scripts": {
-    "test": "minify src/localstorage.js > ./localstorage.js && jest"
+    "test": "terser src/localstorage.js -o ./localstorage.js -c --source-map \"filename='./localstorage.map.js'\" && jest"
   },
   "jest": {
     "verbose": true,
@@ -41,8 +41,7 @@
     "eslint": "^5.16.0",
     "eslint-config-google": "^0.13.0",
     "jest": "^24.8.0",
-    "jest-localstorage-mock": "^2.4.0",
-    "minify": "^4.1.3"
+    "jest-localstorage-mock": "^2.4.0"
   },
   "dependencies": {}
 }
