@@ -11,10 +11,11 @@ var getData = async () => {
 		var cacheKey = cacheKeyPrefix + endpoints[i];
 
 		if (lsHandle.shouldUpdateStorage(cacheKey)) {
-			await fetchData(endpoints[i]);
+			let result = await fetchData(endpoints[i]);
+			console.log(result);
+		}else{
+			console.log(lsHandle.get(cacheKey));
 		}
-
-		console.log(lsHandle.get(cacheKey));
 	}
 };
 
@@ -30,8 +31,9 @@ var fetchData = async (endPoint) => {
 		xhr.open('GET', 'https://jsonplaceholder.typicode.com/' + endPoint);
 		xhr.onload = function () {
 			if (this.status >= 200 && this.status < 300) {
-				storeData(JSON.parse(xhr.response), endPoint);
-				resolve();
+				let data = JSON.parse(xhr.response);
+				storeData(data, endPoint);
+				resolve({entry: data});
 			}
 		};
 		xhr.send();
