@@ -4,41 +4,38 @@ const spyError = jest.spyOn( console, 'error' );
 const spyWarn = jest.spyOn( console, 'warn' );
 
 beforeEach( () => {
-  spyError.mockReset();
-  spyWarn.mockReset();
+	spyError.mockReset();
+	spyWarn.mockReset();
 
 	localStorage.__STORE__.clear();
 } );
 
 const KEY = "foo",
-			TIME = 10,
-			DATA = "bar";
+	TIME = 10,
+	DATA = "bar";
 
-test('should set cacheTime', () => {
-	localsorageHandle.options.cacheTime = TIME;
-	expect(localsorageHandle.options.cacheTime).toBe(10);
-});
 
-test('should set multiple cacheTimeKeys', () => {
-	var keys = ['key1', 'key2', 'key3'];
+describe('Test handle options', () => {
+	test('should set cacheTime', () => {
+		localsorageHandle.options.cacheTime = TIME;
+		expect(localsorageHandle.options.cacheTime).toBe(10);
+	});
 
-	for(var i = 0; i < keys.length; i++) {
-		let cacheKey = 'multiple_' + keys[i];
-		localsorageHandle.update(cacheKey, keys);
-		expect(localsorageHandle.options.cacheTimetKey).toBe(cacheKey + '_cacheTime');
-	}
-});
+	test('should set multiple cacheTimeKeys', () => {
+		var keys = ['key1', 'key2', 'key3'];
 
-test('should set cacheKey directly', () => {
-	localsorageHandle.options.cacheKey = KEY;
-	expect(localsorageHandle.options.cacheKey).toBe(KEY);
-});
+		for (var i = 0; i < keys.length; i++) {
+			let cacheKey = 'multiple_' + keys[i];
+			localsorageHandle.update(cacheKey, keys);
+			expect(localsorageHandle.options.cacheTimetKey).toBe(cacheKey + '_cacheTime');
+		}
+	});
 
-test('update localStorage', () => {
- 	localsorageHandle.update(KEY, DATA);
+	test('should set cacheKey directly', () => {
+		localsorageHandle.options.cacheKey = KEY;
+		expect(localsorageHandle.options.cacheKey).toBe(KEY);
+	});
 
-	expect(localsorageHandle.options.cacheTimetKey).toBe(KEY + '_cacheTime');
-	expect(localsorageHandle.get(KEY).entry).toBe('bar');
 });
 
 describe('Receiving data from localStorage add fromLocalstorage = true', () => {
@@ -51,11 +48,13 @@ describe('Receiving data from localStorage add fromLocalstorage = true', () => {
 
 		expect( typeof recevied ).toBe( "object" );
 		expect( recevied.fromLocalstorage ).toBe( true );
-		expect( recevied.entry ).toBe( data );
+
+		expect( typeof recevied.entry ).toBe( "string" );
+		expect( recevied.entry ).toStrictEqual( data );
 	} );
 
 	test( 'typeof array', () => {
-		let key = 'stringTest';
+		let key = 'arrayTest';
 		let data = ['key1', 'key2', 'key3'];
 
 		localsorageHandle.update( key, data );
@@ -63,30 +62,51 @@ describe('Receiving data from localStorage add fromLocalstorage = true', () => {
 
 		expect( typeof recevied ).toBe( "object" );
 		expect( recevied.fromLocalstorage ).toBe( true );
-		expect( recevied.entry ).toBe( data );
+
+		expect( Array.isArray(recevied.entry) ).toBe( true );
+		expect( recevied.entry ).toStrictEqual( data );
 	} );
 
 
+	test( 'typeof object', () => {
+		let key = 'objectTest';
+		let data = {
+			key1: 'foo',
+			key2: 'bar',
+			key3: 'foobar',
+		};
+
+		localsorageHandle.update( key, data );
+		let recevied = localsorageHandle.get( key );
+
+		expect( typeof recevied ).toBe( "object" );
+		expect( recevied.fromLocalstorage ).toBe( true );
+
+		expect( typeof recevied.entry ).toBe( "object" );
+		expect( recevied.entry ).toStrictEqual( data );
+	} );
+
 });
 
-/*
-test('shouldUpdateStorage() do update', () => {
-	expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(true);
-});
-
-test('shouldUpdateStorage() do not update', () => {
-	localsorageHandle.update(KEY, DATA);
-	expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(false);
-});
-
-test('shouldUpdateStorage() do update on timeout ', (done) => {
-	localsorageHandle.update(KEY, DATA);
-	expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(false);
-
-	setTimeout(() => {
+describe('test shouldUpdateStorage', () => {
+	test('do update', () => {
 		expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(true);
-		done();
-	}, 11);
+	});
+
+	test('do not update', () => {
+		localsorageHandle.update(KEY, DATA);
+		expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(false);
+	});
+
+	test('do update on timeout ', (done) => {
+		localsorageHandle.update(KEY, DATA);
+		expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(false);
+
+		setTimeout(() => {
+			expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(true);
+			done();
+		}, 11);
+	});
 });
 
 test('purge storage by getKey', () => {
@@ -96,4 +116,3 @@ test('purge storage by getKey', () => {
 	localsorageHandle.purge(KEY);
 	expect(localsorageHandle.get(KEY)).toBe(null);
 });
-*/
