@@ -1,6 +1,6 @@
-var lsHandle = require('../../localstorage.js');
+var lsHandle = require('../../src/localstorage.js');
 
-lsHandle.options.cacheTime = 1000;
+lsHandle.options.cacheTime = 60 * 60;
 
 var cacheKeyPrefix = 'lsHandle_example_';
 

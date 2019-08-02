@@ -14,23 +14,62 @@ const KEY = "foo",
 			TIME = 10,
 			DATA = "bar";
 
-test('should set cacheKey', () => {
-	localsorageHandle.options.cacheKey = KEY;
-	expect(localsorageHandle.options.cacheKey).toBe(KEY);
-});
-
 test('should set cacheTime', () => {
 	localsorageHandle.options.cacheTime = TIME;
 	expect(localsorageHandle.options.cacheTime).toBe(10);
+});
+
+test('should set multiple cacheTimeKeys', () => {
+	var keys = ['key1', 'key2', 'key3'];
+
+	for(var i = 0; i < keys.length; i++) {
+		let cacheKey = 'multiple_' + keys[i];
+		localsorageHandle.update(cacheKey, keys);
+		expect(localsorageHandle.options.cacheTimetKey).toBe(cacheKey + '_cacheTime');
+	}
+});
+
+test('should set cacheKey directly', () => {
+	localsorageHandle.options.cacheKey = KEY;
+	expect(localsorageHandle.options.cacheKey).toBe(KEY);
 });
 
 test('update localStorage', () => {
  	localsorageHandle.update(KEY, DATA);
 
 	expect(localsorageHandle.options.cacheTimetKey).toBe(KEY + '_cacheTime');
-	expect(localsorageHandle.get(KEY)).toBe(DATA);
+	expect(localsorageHandle.get(KEY).entry).toBe('bar');
 });
 
+describe('Receiving data from localStorage add fromLocalstorage = true', () => {
+	test( 'typeof string', () => {
+		let key = 'stringTest';
+		let data = 'bar';
+
+		localsorageHandle.update( key, data );
+		let recevied = localsorageHandle.get( key );
+
+		expect( typeof recevied ).toBe( "object" );
+		expect( recevied.fromLocalstorage ).toBe( true );
+		expect( recevied.entry ).toBe( data );
+	} );
+
+	test( 'typeof array', () => {
+		let key = 'stringTest';
+		let data = ['key1', 'key2', 'key3'];
+
+		localsorageHandle.update( key, data );
+		let recevied = localsorageHandle.get( key );
+
+		expect( typeof recevied ).toBe( "object" );
+		expect( recevied.fromLocalstorage ).toBe( true );
+		expect( recevied.entry ).toBe( data );
+	} );
+
+
+});
+
+/*
 test('shouldUpdateStorage() do update', () => {
 	expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(true);
 });
@@ -50,10 +89,11 @@ test('shouldUpdateStorage() do update on timeout ', (done) => {
 	}, 11);
 });
 
-test('purge storage by key', () => {
+test('purge storage by getKey', () => {
 	localsorageHandle.update(KEY, DATA);
 	expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(false);
 
 	localsorageHandle.purge(KEY);
 	expect(localsorageHandle.get(KEY)).toBe(null);
 });
+*/

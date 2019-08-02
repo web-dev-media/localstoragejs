@@ -9,13 +9,15 @@ const localstorage = {
 		let self = this;
 
 		let functions = {
-			updateKey: function() {
-				if ( !self.options.cacheTimetKey ) {
-					self.options.cacheTimetKey = self.options.cacheKey + '_cacheTime';
+			setKey: function() {
+				let cacheTimetKey = self.options.cacheKey ? self.options.cacheKey + '_cacheTime' : '';
+
+				if ( cacheTimetKey ) {
+					self.options.cacheTimetKey = cacheTimetKey;
 				}
 			},
 
-			key: function() {
+			getKey: function() {
 				return self.options.cacheTimetKey;
 			},
 
@@ -35,7 +37,7 @@ const localstorage = {
 			}
 		};
 
-		functions.updateKey();
+		functions.setKey();
 
 		return functions;
 	},
@@ -49,7 +51,8 @@ const localstorage = {
 	},
 
 	update: function( localStorageKey, data ) {
-		localStorage.setItem( this.cacheTime().key(), (
+		this.options.cacheKey = localStorageKey ? localStorageKey : false;
+		localStorage.setItem( this.cacheTime().getKey(), (
 			new Date().getTime() + this.options.cacheTime
 		) );
 		localStorage.setItem( localStorageKey, JSON.stringify( data ) );
@@ -57,9 +60,13 @@ const localstorage = {
 
 	get: function( localStorageKey ) {
 		this.options.cacheKey = localStorageKey ? localStorageKey : false;
-		this.sorageData = localStorage.getItem( this.options.cacheKey );
 
-		return this.sorageData ? JSON.parse( this.sorageData ) : null;
+		let data = JSON.parse( localStorage.getItem( this.options.cacheKey ));
+		this.sorageData = {};
+		this.sorageData.fromLocalstorage = true;
+		this.sorageData.entry = data;
+
+		return this.sorageData ? this.sorageData : null;
 	},
 
 	purge: function( localStorageKey ) {
