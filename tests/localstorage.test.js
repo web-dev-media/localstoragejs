@@ -14,15 +14,14 @@ const KEY = "foo",
 	TIME = 10,
 	DATA = "bar";
 
-
 describe('Test handle options', () => {
-	test('should set cacheTime', () => {
+	test('should set option cacheTime', () => {
 		localsorageHandle.options.cacheTime = TIME;
 		expect(localsorageHandle.options.cacheTime).toBe(10);
 	});
 
 	test('should set multiple cacheTimeKeys', () => {
-		var keys = ['key1', 'key2', 'key3'];
+		let keys = ['key1', 'key2', 'key3'];
 
 		for (var i = 0; i < keys.length; i++) {
 			let cacheKey = 'multiple_' + keys[i];

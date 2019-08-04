@@ -1,5 +1,5 @@
-# easy handle localstorage
-**a lightweight javascript handler for using localstorage.**
+# localstorage made simple
+**a lightweight javascript to handel localstorage.**
 
 ## Install
 ```sh

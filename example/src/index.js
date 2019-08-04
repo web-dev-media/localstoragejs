@@ -1,10 +1,11 @@
 var lsHandle = require('../../src/localstorage.js');
 
-lsHandle.options.cacheTime = 60 * 60;
+lsHandle.options.cacheTime = 5 * 60 * 60;
 
 var cacheKeyPrefix = 'lsHandle_example_';
 
 var getData = async () => {
+	var data = [];
 	var endpoints = ['photos', 'posts', 'comments'];
 
 	for(var i = 0; i < endpoints.length; i++) {
@@ -12,11 +13,15 @@ var getData = async () => {
 
 		if (lsHandle.shouldUpdateStorage(cacheKey)) {
 			let result = await fetchData(endpoints[i]);
-			console.log(result);
+			data.push(result);
 		}else{
-			console.log(lsHandle.get(cacheKey));
+			data.push(lsHandle.get(cacheKey));
 		}
 	}
+
+	data.push(lsHandle.options);
+
+	return data;
 };
 
 var storeData = (data, endPoint) => {
@@ -40,9 +45,21 @@ var fetchData = async (endPoint) => {
 	});
 };
 
-/* run codeexample on document loaded */
+/* run example on document loaded */
 document.addEventListener('DOMContentLoaded', function(event) {
-	getData();
+	var zeit0 = performance.now();
+	new Promise((resolve, reject) => {
+			var data = getData();
+
+			if(data){
+				resolve(data);
+			}
+		}).then( (data) => {
+		console.log(data);
+		var zeit1 = performance.now();
+		console.log("Der Aufruf von getData dauerte " + (zeit1 - zeit0) + " ms.");
+	});
+
 });
 
 
