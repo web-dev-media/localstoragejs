@@ -1,54 +1,89 @@
 let lsHandle = require('../../src/localstorage.js');
+let hash = require('object-hash');
 
-let mediaPlayer = () => {
-	let self = this;
-	return {
-		options: {
+class mediaPlayer {
+	constructor() {
+		this.options = {
 			storage_key: 'audio-play-storage',
 			currentpos : 0,
 			selectors  : {
-				player        : '#media-audio',
-				playerControls: {
-					startStop  : '#play-pause-button',
-					mute       : '#mute-button',
-					progressBar: '#progress-bar'
+				player  : '.mediaAudio',
+				controls: {
+					startStop  : '.playStop',
+					mute       : '.mute',
+					progressBar: '.progress-bar'
 				}
+			},
+			players    : []
+		};
+
+		this.selectPlayerNodes();
+		this.addEvents();
+	}
+
+	selectPlayerNodes() {
+		let self = this;
+
+		if ( self.options.selectors ) {
+			let selector = self.options.selectors.player;
+
+			if ( selector ) {
+				let players = document.querySelectorAll( selector );
+				[].forEach.call( players, function( player ) {
+					let playerControls = {};
+					let playerSources = {};
+
+					let sources = player.querySelectorAll( 'source' );
+
+					[].forEach.call( sources, function( source ) {
+						let type = source.getAttribute('type');
+						playerSources[type] = source.getAttribute('src');
+					});
+
+					for ( selector in self.options.selectors.controls ) {
+						playerControls[ selector ] = player.querySelector( self.options.selectors.controls[ selector ] );
+					}
+
+					self.options.players.push({
+						player: player,
+						controls: playerControls,
+						sources: playerSources,
+						playerHash: hash(playerSources)
+					});
+				} );
 			}
-		},
-	/*
-		events: {
-			//play: storage.set( 'mediaPlayer.isPlaying', 1 ),
-			//stop: storage.set( 'mediaPlayer.isPlaying', 0 ),
-		},
-
-		selectNodes: {
-			if ( this.selectors ) {
-				for ( selector in this.selectors ) {
-
-					//document.querySelector('#media-audio' )
-
-				}
-			}
-		},
-
-		addEvents: {
-			if ( this.events ) {
-				for ( event in this.events ) {
-					/!*	mediaPlayer.addEventListener( 'play', function() {
-							storage.set( 'mediaPlayer.isPlaying', 1 );
-						}, false );*!/
-				}
-			}
-		},
-	*/
-		init: () => {
-			console.log( self.options );
 		}
 	}
-};
+
+	addEvents() {
+		if(this.options.players) {
+			let eventsToListen = [ 'play', 'pause' ];
+
+			for (let i = 0; i < this.options.players.length; i++ ) {
+				let player = this.options.players[i].player;
+				let playerHash = this.options.players[i].playerHash;
+
+				for ( let c = 0; c < eventsToListen.length; c++ ) {
+					let event = eventsToListen[c];
+
+					console.log({
+						event: event,
+						player: player,
+						playerHash: playerHash
+					});
+
+/*					player.addEventListener( event, function() {
+
+					}, false );*/
+				}
+			}
+		}
+	}
+
+}
 
 document.addEventListener('DOMContentLoaded', function(event) {
-	console.log(mediaPlayer().init());
+	console.log(new mediaPlayer());
 });
 
 /*

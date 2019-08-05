@@ -6,5 +6,38 @@
     </head>
     <body>
         <h2>@web-dev-media/localstorage example - a lightweight javascript to handel localstorage.</h2>
+
+        <div class="mediaAudio">
+            <audio controls="true">
+                <source src="http://cdn.podseed.org/webschale/wp-sofa/wp-sofa-02.mp3" type="audio/mp3">
+                <source src="http://cdn.podseed.org/webschale/wp-sofa/wp-sofa-02.ogg" type="audio/ogg">
+                <source src="http://cdn.podseed.org/webschale/wp-sofa/wp-sofa-02.acc" type="audio/mp4">
+                <!-- If no support at all. -->
+                HTML5 audio not supported
+            </audio>
+
+            <div class='controls'>
+                <progress class="progress-bar" min="0" max="100" value="0">0% played</progress>
+                <button class="replay" title="replay">Replay</button>
+                <button class="playStop" title="play">Play</button>
+            </div>
+        </div>
+
+        <div class="mediaAudio">
+            <audio controls="false">
+                <source src="http://cdn.podseed.org/webschale/wp-sofa/wp-sofa-03.mp3" type="audio/mp3">
+                <source src="http://cdn.podseed.org/webschale/wp-sofa/wp-sofa-03.ogg" type="audio/ogg">
+                <source src="http://cdn.podseed.org/webschale/wp-sofa/wp-sofa-03.acc" type="audio/mp4">
+                <!-- If no support at all. -->
+                HTML5 audio not supported
+            </audio>
+
+            <div class='controls'>
+                <progress class="progress-bar" min="0" max="100" value="0">0% played</progress>
+                <button class="replay-button" title="replay">Replay</button>
+                <button class="playStop" title="play">Play</button>
+            </div>
+        </div>
+
     </body>
 </html>
