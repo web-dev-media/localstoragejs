@@ -60,17 +60,7 @@ const localstorage = {
 
 	get: function( localStorageKey ) {
 		this.options.cacheKey = localStorageKey ? localStorageKey : false;
-		this.data = null;
-
-		let data = JSON.parse( localStorage.getItem( this.options.cacheKey ));
-
-		if(data) {
-			this.data                  = {};
-			this.data.fromLocalstorage = true;
-			this.data.entry            = data;
-		}
-
-		return this.data;
+		return JSON.parse( localStorage.getItem( this.options.cacheKey ));
 	},
 
 	purge: function( localStorageKey ) {

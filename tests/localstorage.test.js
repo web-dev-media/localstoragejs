@@ -37,7 +37,7 @@ describe('Test handle options', () => {
 
 });
 
-describe('Receiving data from localStorage add fromLocalstorage = true', () => {
+describe('Receiving data from localStorage', () => {
 	test( 'typeof string', () => {
 		let key = 'stringTest';
 		let data = 'bar';
@@ -46,7 +46,6 @@ describe('Receiving data from localStorage add fromLocalstorage = true', () => {
 		let recevied = localsorageHandle.get( key );
 
 		expect( typeof recevied ).toBe( "object" );
-		expect( recevied.fromLocalstorage ).toBe( true );
 
 		expect( typeof recevied.entry ).toBe( "string" );
 		expect( recevied.entry ).toStrictEqual( data );
@@ -60,7 +59,6 @@ describe('Receiving data from localStorage add fromLocalstorage = true', () => {
 		let recevied = localsorageHandle.get( key );
 
 		expect( typeof recevied ).toBe( "object" );
-		expect( recevied.fromLocalstorage ).toBe( true );
 
 		expect( Array.isArray(recevied.entry) ).toBe( true );
 		expect( recevied.entry ).toStrictEqual( data );
@@ -79,7 +77,6 @@ describe('Receiving data from localStorage add fromLocalstorage = true', () => {
 		let recevied = localsorageHandle.get( key );
 
 		expect( typeof recevied ).toBe( "object" );
-		expect( recevied.fromLocalstorage ).toBe( true );
 
 		expect( typeof recevied.entry ).toBe( "object" );
 		expect( recevied.entry ).toStrictEqual( data );
