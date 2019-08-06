@@ -45,10 +45,8 @@ describe('Receiving data from localStorage', () => {
 		localsorageHandle.update( key, data );
 		let recevied = localsorageHandle.get( key );
 
-		expect( typeof recevied ).toBe( "object" );
-
-		expect( typeof recevied.entry ).toBe( "string" );
-		expect( recevied.entry ).toStrictEqual( data );
+		expect( typeof recevied ).toBe( "string" );
+		expect( recevied ).toStrictEqual( data );
 	} );
 
 	test( 'typeof array', () => {
@@ -58,10 +56,8 @@ describe('Receiving data from localStorage', () => {
 		localsorageHandle.update( key, data );
 		let recevied = localsorageHandle.get( key );
 
-		expect( typeof recevied ).toBe( "object" );
-
-		expect( Array.isArray(recevied.entry) ).toBe( true );
-		expect( recevied.entry ).toStrictEqual( data );
+		expect( Array.isArray(recevied) ).toBe( true );
+		expect( recevied ).toStrictEqual( data );
 	} );
 
 
@@ -77,9 +73,7 @@ describe('Receiving data from localStorage', () => {
 		let recevied = localsorageHandle.get( key );
 
 		expect( typeof recevied ).toBe( "object" );
-
-		expect( typeof recevied.entry ).toBe( "object" );
-		expect( recevied.entry ).toStrictEqual( data );
+		expect( recevied ).toStrictEqual( data );
 	} );
 
 });

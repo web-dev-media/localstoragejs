@@ -17,11 +17,11 @@ class mediaPlayer {
 			players    : []
 		};
 
-		this.selectPlayerNodes();
+		this.collectPlayers();
 		this.addEvents();
 	}
 
-	selectPlayerNodes() {
+	collectPlayers() {
 		let self = this;
 
 		if ( self.options.selectors ) {
@@ -57,7 +57,7 @@ class mediaPlayer {
 
 	addEvents() {
 		if(this.options.players) {
-			let eventsToListen = [ 'play', 'pause' ];
+			let eventsToListen = [ 'play', 'pause', 'playing', 'progress'];
 
 			for (let i = 0; i < this.options.players.length; i++ ) {
 				let player = this.options.players[i].player;
@@ -66,15 +66,14 @@ class mediaPlayer {
 				for ( let c = 0; c < eventsToListen.length; c++ ) {
 					let event = eventsToListen[c];
 
-					console.log({
-						event: event,
-						player: player,
-						playerHash: playerHash
-					});
+					player.addEventListener( event, function() {
+						console.log({
+							event: event,
+							player: player,
+							playerHash: playerHash
+						});
+					}, false );
 
-/*					player.addEventListener( event, function() {
-
-					}, false );*/
 				}
 			}
 		}
