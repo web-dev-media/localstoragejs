@@ -33,6 +33,7 @@ class mediaPlayer {
 					let playerControls = {};
 					let playerSources = {};
 
+					let audio = player.querySelector( 'audio' );
 					let sources = player.querySelectorAll( 'source' );
 
 					[].forEach.call( sources, function( source ) {
@@ -46,43 +47,53 @@ class mediaPlayer {
 
 					self.options.players.push({
 						player: player,
+						audio: audio,
 						controls: playerControls,
 						sources: playerSources,
 						playerHash: hash(playerSources)
 					});
+
 				} );
 			}
 		}
 	}
 
 	addEvents() {
-		if(this.options.players) {
-			let eventsToListen = [ 'play', 'pause', 'playing', 'progress'];
-
-			for (let i = 0; i < this.options.players.length; i++ ) {
-				let player = this.options.players[i].player;
-				let playerHash = this.options.players[i].playerHash;
-
-				for ( let c = 0; c < eventsToListen.length; c++ ) {
-					let event = eventsToListen[c];
-
-					player.addEventListener( event, function() {
-						console.log({
-							event: event,
-							player: player,
-							playerHash: playerHash
-						});
-					}, false );
-
-				}
-			}
+		let mediaPlayerClass = this;
+		if(mediaPlayerClass.options.players) {
+			mediaPlayerClass.options.players.map(player => {
+				[ 'play', 'pause', 'playing', 'progress', 'timeupdate'].map( event => {
+					player.audio.addEventListener( event, mediaPlayerClass[event](event) );
+				});
+			});
 		}
+	}
+
+	play(event){
+		console.log(this);
+	}
+
+	pause(event){
+		console.log(this);
+	}
+
+
+	playing(event){
+		console.log(this);
+	}
+
+	progress(event){
+		console.log(event);
+	}
+
+	timeupdate(event){
+		console.log(this);
 	}
 
 }
 
 document.addEventListener('DOMContentLoaded', function(event) {
-	console.log(new mediaPlayer());
+	new mediaPlayer();
 });
 
 /*
