@@ -52,9 +52,13 @@ const localstorage = {
 
 	update: function( localStorageKey, data ) {
 		this.options.cacheKey = localStorageKey ? localStorageKey : false;
-		localStorage.setItem( this.cacheTime().getKey(), (
-			new Date().getTime() + this.options.cacheTime
-		) );
+
+		if(this.options.cacheTime > 1) {
+			localStorage.setItem( this.cacheTime().getKey(), (
+				new Date().getTime() + this.options.cacheTime
+			) );
+		}
+
 		localStorage.setItem( localStorageKey, JSON.stringify( data ) );
 	},
 
