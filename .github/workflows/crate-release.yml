@@ -1,13 +1,13 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Build and release on push at the branch release/v*
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  release:
-    types: # This configuration does not affect the page_build event above
-      - published
+  push:
+    branches:    
+      - 'release/v**'  
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
