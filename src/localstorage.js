@@ -1,7 +1,7 @@
 const localstorage = {
 	options: {
 		cacheTime    : 24 * 60 * 60,
-		cacheTimetKey: '',
+		cacheTimeKey: '',
 		cacheKey     : ''
 	},
 
@@ -10,30 +10,30 @@ const localstorage = {
 
 		let functions = {
 			setKey: function() {
-				let cacheTimetKey = self.options.cacheKey ? self.options.cacheKey + '_cacheTime' : '';
+				let cacheTimeKey = self.options.cacheKey ? self.options.cacheKey + '_cacheTime' : '';
 
-				if ( cacheTimetKey ) {
-					self.options.cacheTimetKey = cacheTimetKey;
+				if ( cacheTimeKey ) {
+					self.options.cacheTimeKey = cacheTimeKey;
 				}
 			},
 
 			getKey: function() {
-				return self.options.cacheTimetKey;
+				return self.options.cacheTimeKey;
 			},
 
 			get: function() {
-				let t = localStorage.getItem( self.options.cacheTimetKey );
+				let t = localStorage.getItem( self.options.cacheTimeKey );
 				return t ? t : this.set();
 			},
 
 			set: function() {
-				return localStorage.setItem( self.options.cacheTimetKey, (
+				return localStorage.setItem( self.options.cacheTimeKey, (
 					new Date().getTime() + self.options.cacheTime
 				) );
 			},
 
 			purge: function() {
-				localStorage.removeItem( self.options.cacheTimetKey );
+				localStorage.removeItem( self.options.cacheTimeKey );
 			}
 		};
 
