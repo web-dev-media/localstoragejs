@@ -26,7 +26,7 @@ describe('Test handle options', () => {
 		for (var i = 0; i < keys.length; i++) {
 			let cacheKey = 'multiple_' + keys[i];
 			localsorageHandle.update(cacheKey, keys);
-			expect(localsorageHandle.options.cacheTimetKey).toBe(cacheKey + '_cacheTime');
+			expect(localsorageHandle.options.cacheTimeKey).toBe(cacheKey + '_cacheTime');
 		}
 	});
 
