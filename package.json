@@ -4,7 +4,7 @@
   "description": "a lightweight javascript to handle localstorage.",
   "main": "localsorage.js",
   "scripts": {
-    "test": "terser src/localstorage.js -o ./localstorage.js -c --source-map \"filename='./localstorage.map.js'\" && jest"
+    "test": "terser src/storage.js -o ./storage.js -c --source-map \"filename='./storage.map.js'\" && jest"
   },
   "jest": {
     "verbose": true,
@@ -51,6 +51,7 @@
   },
   "homepage": "https://github.com/web-dev-media/localstoragejs#readme",
   "devDependencies": {
+    "@babel/preset-env": "^7.15.8",
     "eslint": "^8.0.1",
     "eslint-config-google": "^0.13.0",
     "jest": "^27.3.1",

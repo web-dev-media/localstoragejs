@@ -1,4 +1,4 @@
-let lsHandle = require('../../src/localstorage.js');
+let lsHandle = require('../../src/storage.js');
 let hash = require('object-hash');
 
 class mediaPlayer {
