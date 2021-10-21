@@ -1,4 +1,4 @@
-var lsHandle = require('../../src/localstorage.js');
+var lsHandle = require('../../src/storage.js');
 
 // override the default cacheTime
 lsHandle.options.cacheTime = 5 * 60 * 60;

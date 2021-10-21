@@ -4,7 +4,7 @@
   "description": "a lightweight javascript to handle localstorage.",
   "main": "localsorage.js",
   "scripts": {
-    "test": "terser src/localstorage.js -o ./localstorage.js -c --source-map \"filename='./localstorage.map.js'\" && jest"
+    "test": "terser src/storage.js -o ./storage.js -c --source-map \"filename='./storage.map.js'\" && jest"
   },
   "jest": {
     "verbose": true,
