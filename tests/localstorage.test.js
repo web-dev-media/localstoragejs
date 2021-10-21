@@ -1,4 +1,4 @@
-const localsorageHandle = require('../localstorage.js');
+const localStorageHandle = require('../localstorage.js');
 
 const spyError = jest.spyOn( console, 'error' );
 const spyWarn = jest.spyOn( console, 'warn' );
@@ -16,8 +16,8 @@ const KEY = "foo",
 
 describe('Test handle options', () => {
 	test('should set option cacheTime', () => {
-		localsorageHandle.options.cacheTime = TIME;
-		expect(localsorageHandle.options.cacheTime).toBe(10);
+		localStorageHandle.options.cacheTime = TIME;
+		expect(localStorageHandle.options.cacheTime).toBe(10);
 	});
 
 	test('should set multiple cacheTimeKeys', () => {
@@ -25,14 +25,14 @@ describe('Test handle options', () => {
 
 		for (var i = 0; i < keys.length; i++) {
 			let cacheKey = 'multiple_' + keys[i];
-			localsorageHandle.update(cacheKey, keys);
-			expect(localsorageHandle.options.cacheTimeKey).toBe(cacheKey + '_cacheTime');
+			localStorageHandle.update(cacheKey, keys);
+			expect(localStorageHandle.options.cacheTimeKey).toBe(cacheKey + '_cacheTime');
 		}
 	});
 
 	test('should set cacheKey directly', () => {
-		localsorageHandle.options.cacheKey = KEY;
-		expect(localsorageHandle.options.cacheKey).toBe(KEY);
+		localStorageHandle.options.cacheKey = KEY;
+		expect(localStorageHandle.options.cacheKey).toBe(KEY);
 	});
 
 });
@@ -42,8 +42,8 @@ describe('Receiving data from localStorage', () => {
 		let key = 'stringTest';
 		let data = 'bar';
 
-		localsorageHandle.update( key, data );
-		let recevied = localsorageHandle.get( key );
+		localStorageHandle.update( key, data );
+		let recevied = localStorageHandle.get( key );
 
 		expect( typeof recevied ).toBe( "string" );
 		expect( recevied ).toStrictEqual( data );
@@ -53,8 +53,8 @@ describe('Receiving data from localStorage', () => {
 		let key = 'arrayTest';
 		let data = ['key1', 'key2', 'key3'];
 
-		localsorageHandle.update( key, data );
-		let recevied = localsorageHandle.get( key );
+		localStorageHandle.update( key, data );
+		let recevied = localStorageHandle.get( key );
 
 		expect( Array.isArray(recevied) ).toBe( true );
 		expect( recevied ).toStrictEqual( data );
@@ -69,8 +69,8 @@ describe('Receiving data from localStorage', () => {
 			key3: 'foobar',
 		};
 
-		localsorageHandle.update( key, data );
-		let recevied = localsorageHandle.get( key );
+		localStorageHandle.update( key, data );
+		let recevied = localStorageHandle.get( key );
 
 		expect( typeof recevied ).toBe( "object" );
 		expect( recevied ).toStrictEqual( data );
@@ -80,29 +80,29 @@ describe('Receiving data from localStorage', () => {
 
 describe('test shouldUpdateStorage', () => {
 	test('do update', () => {
-		expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(true);
+		expect(localStorageHandle.shouldUpdateStorage(KEY)).toBe(true);
 	});
 
 	test('do not update', () => {
-		localsorageHandle.update(KEY, DATA);
-		expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(false);
+		localStorageHandle.update(KEY, DATA);
+		expect(localStorageHandle.shouldUpdateStorage(KEY)).toBe(false);
 	});
 
 	test('do update on timeout ', (done) => {
-		localsorageHandle.update(KEY, DATA);
-		expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(false);
+		localStorageHandle.update(KEY, DATA);
+		expect(localStorageHandle.shouldUpdateStorage(KEY)).toBe(false);
 
 		setTimeout(() => {
-			expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(true);
+			expect(localStorageHandle.shouldUpdateStorage(KEY)).toBe(true);
 			done();
 		}, 11);
 	});
 });
 
 test('purge storage by getKey', () => {
-	localsorageHandle.update(KEY, DATA);
-	expect(localsorageHandle.shouldUpdateStorage(KEY)).toBe(false);
+	localStorageHandle.update(KEY, DATA);
+	expect(localStorageHandle.shouldUpdateStorage(KEY)).toBe(false);
 
-	localsorageHandle.purge(KEY);
-	expect(localsorageHandle.get(KEY)).toBe(null);
+	localStorageHandle.purge(KEY);
+	expect(localStorageHandle.get(KEY)).toBe(null);
 });
