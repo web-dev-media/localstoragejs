@@ -1,6 +1,6 @@
 import {Storage} from '../src/storage.js';
 
-const test_options = {
+const testOptions = {
     cacheTime: 24 * 60,
     cacheKey: 'fooo_bar',
     data: 'foo_abcd',
@@ -20,10 +20,10 @@ describe('LocalStorage', () => {
     test('Test add data to storage', () => {
         const localStorageHandle = new Storage();
 
-        expect(localStorageHandle.get(test_options.cacheKey)).toBe(null);
+        expect(localStorageHandle.get(testOptions.cacheKey)).toBe(null);
 
-        localStorageHandle.set(test_options.data, test_options.cacheKey, test_options.cacheTime);
+        localStorageHandle.set(testOptions.data, testOptions.cacheKey, testOptions.cacheTime);
 
-        expect(localStorageHandle.get(test_options.cacheKey)).toBe(test_options.data);
+        expect(localStorageHandle.get(testOptions.cacheKey)).toBe(testOptions.data);
     });
 });
