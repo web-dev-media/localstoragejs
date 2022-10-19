@@ -7,6 +7,7 @@
     "test": "npx terser src/storage.js -o ./storage.js -c --source-map \"filename='./storage.map.js'\" && jest"
   },
   "jest": {
+    "testTimeout": 15000,
     "verbose": true,
     "setupFiles": [
       "jest-localstorage-mock"

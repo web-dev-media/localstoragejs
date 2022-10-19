@@ -43,7 +43,7 @@ export class Storage {
 
     const entry = JSON.parse(localStorage.getItem(key)) || null;
     if (entry === null) {
-      return '';
+      return null;
     }
 
     const currentTime = new Date().getTime();

@@ -11,17 +11,21 @@ npm install --save @web-dev-media/localstorage
 ```js
 const localstorageJs = require("@web-dev-media/localstorage");
 
-const testOptions = {
+const cacheOptions = {
     cacheTime: 24 * 60,
     cacheKey: 'fooo_bar',
     data: 'foo_abcd',
 };
 
-localstorageJs.get(testOptions.cacheKey);
+localstorageJs.set(
+    cacheOptions.cacheKey,
+    cacheOptions.data,
+    cacheOptions.cacheTime
+);
 
+let dataFromLocalCache = localstorageJs.get(cacheOptions.cacheKey);
 
-
-localStorageHandle.set(testOptions.cacheKey, testOptions.data, testOptions.cacheTime);
+localstorageJs.remove(cacheOptions.cacheKey)
 ```
 
 #### contact

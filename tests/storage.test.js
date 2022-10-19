@@ -53,4 +53,15 @@ describe('LocalStorage', () => {
 
     expect(localStorageHandle.get(testOptions.cacheKey)).toBe(null);
   });
+
+  test('Test invalidate cache', () => {
+    const localStorageHandle = new Storage();
+
+    localStorageHandle.set(testOptions.cacheKey, testOptions.data, 1);
+    expect(localStorageHandle.get(testOptions.cacheKey)).toBe(testOptions.data);
+
+    setTimeout(() => {
+      expect(localStorageHandle.get(testOptions.cacheKey)).toBe(null);
+    }, 900);
+  });
 });
