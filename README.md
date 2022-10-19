@@ -3,13 +3,13 @@
 
 ## Install
 ```sh
-npm install --save localstorage
+npm install --save @web-dev-media/localstorage
 ```
 
 ## Usage
 #### require
 ```js
-const localstorage = require("localstorage");
+const localstorage = require("@web-dev-media/localstorage");
 ```
 
 #### contact
