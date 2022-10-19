@@ -9,7 +9,19 @@ npm install --save @web-dev-media/localstorage
 ## Usage
 #### require
 ```js
-const localstorage = require("@web-dev-media/localstorage");
+const localstorageJs = require("@web-dev-media/localstorage");
+
+const testOptions = {
+    cacheTime: 24 * 60,
+    cacheKey: 'fooo_bar',
+    data: 'foo_abcd',
+};
+
+localstorageJs.get(testOptions.cacheKey);
+
+
+
+localStorageHandle.set(testOptions.cacheKey, testOptions.data, testOptions.cacheTime);
 ```
 
 #### contact

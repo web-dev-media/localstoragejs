@@ -41,8 +41,13 @@ export class Storage {
       return null;
     }
 
-    const entry = JSON.parse(localStorage.getItem(key));
-    const cacheData = entry && (entry.timestamp === 0 || entry.timestamp > new Date().getTime()) ? entry.data : null;
+    const entry = JSON.parse(localStorage.getItem(key)) || null;
+    if (entry === null) {
+      return '';
+    }
+
+    const currentTime = new Date().getTime();
+    const cacheData = entry.timestamp === 0 || entry.timestamp > currentTime ? entry.data : null;
 
     if (!cacheData) {
       this.remove(key);

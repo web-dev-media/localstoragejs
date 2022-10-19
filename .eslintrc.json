@@ -15,7 +15,7 @@
       "sourceType": "module"
     },
     "rules": {
-        "max-len": ["error", { "code": 90 }],
+        "max-len": ["error", { "code": 100 }],
         "comma-dangle": 0
     }
 }
