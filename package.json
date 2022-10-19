@@ -1,12 +1,13 @@
 {
   "name": "@web-dev-media/localstorage",
-  "version": "1.2.0",
+  "version": "1.3.4",
   "description": "a lightweight javascript to handle localstorage.",
   "main": "localsorage.js",
   "scripts": {
     "test": "npx terser src/storage.js -o ./storage.js -c --source-map \"filename='./storage.map.js'\" && jest"
   },
   "jest": {
+    "testTimeout": 15000,
     "verbose": true,
     "setupFiles": [
       "jest-localstorage-mock"
